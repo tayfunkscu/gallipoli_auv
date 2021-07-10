@@ -1,0 +1,29 @@
+
+<launch>
+
+  <param name="robot_description"
+	 command="$(find xacro)/xacro.py '$(find gallipoli_auv_description)/robots/default.xacro'" />
+   
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find gallipoli_auv_control)/config/gallipoli_auv_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	output="screen" ns="/gallipoli_auv" args="joint_state_controller
+					  th0_velocity_controller
+					  th1_velocity_controller
+                      th2_velocity_controller
+                      th3_velocity_controller
+                      th4_velocity_controller
+                      th5_velocity_controller
+                      th6_velocity_controller
+                      th7_velocity_controller"/>
+
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+    <remap from="/joint_states" to="/gallipoli_auv/joint_states" />
+  </node>
+
+</launch>

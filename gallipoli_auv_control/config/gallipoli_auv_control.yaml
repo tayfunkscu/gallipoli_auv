@@ -1,0 +1,37 @@
+gallipoli_auv:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 4
+
+  th0_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_0_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th1_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_1_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th2_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_2_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th3_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_3_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th4_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_4_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th5_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_5_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th6_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_6_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
+  th7_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: gallipoli_auv/thruster_7_joint
+    #pid: {p: 100.0, i: 0.1, d: 10.0}
