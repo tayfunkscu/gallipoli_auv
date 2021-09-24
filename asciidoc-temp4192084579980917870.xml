@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><?asciidoc-toc?><?asciidoc-numbered?><article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Gallipoli AUV</title>
+<date>2021-09-23</date>
+</info>
+<section xml:id="_gallipoli_auv">
+<title>Gallipoli AUV</title>
+<simpara>ROS based AUV developed for the competition "Teknofest 2021". All packages have been tested under ROS Melodic and Ubuntu 18.04.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata contentwidth="300px" fileref="img/img01.jpeg"/>
+</imageobject>
+<textobject><phrase>img01</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section xml:id="_table_of_contents">
+<title>Table of Contents</title>
+<itemizedlist>
+<listitem>
+<simpara>Hardware</simpara>
+</listitem>
+<listitem>
+<simpara>Thruster Configuration</simpara>
+</listitem>
+<listitem>
+<simpara>Software</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Embedded</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Used Libraries</simpara>
+</listitem>
+<listitem>
+<simpara>Messages</simpara>
+</listitem>
+<listitem>
+<simpara>Topics on Arduino</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Publishers</simpara>
+</listitem>
+<listitem>
+<simpara>Subscribers</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Single Board Computer</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Real-Time Object Detection</simpara>
+</listitem>
+<listitem>
+<simpara>Teleoperation</simpara>
+</listitem>
+<listitem>
+<simpara>Mission Software</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Capabilities</simpara>
+</listitem>
+<listitem>
+<simpara>Bringup</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_hardware">
+<title>Hardware</title>
+<itemizedlist>
+<listitem>
+<simpara>NVIDIA Jetson Nano Developer Kit 4GB</simpara>
+</listitem>
+<listitem>
+<simpara>Arduino Mega 2560 Rev3</simpara>
+</listitem>
+<listitem>
+<simpara>Intel RealSense D435i</simpara>
+</listitem>
+<listitem>
+<simpara>2x HOBBYWING XRotor Micro 60A +S 4in1 BLHeli_32-DS1200 ESC</simpara>
+</listitem>
+<listitem>
+<simpara>BlueRobotics Bar30 High-Resolution 300m Depth/Pressure Sensor</simpara>
+</listitem>
+<listitem>
+<simpara>BlueRobotics I2C Level Converter</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_thruster_configuration">
+<title>Thruster Configuration</title>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata contentwidth="300px" fileref="img/img04.png"/>
+</imageobject>
+<textobject><phrase>img04</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section xml:id="_software">
+<title>Software</title>
+<section xml:id="_embedded">
+<title>Embedded</title>
+<simpara>Embedded software has been developed on Arduino</simpara>
+<section xml:id="_used_libraries">
+<title>Used Libraries</title>
+<itemizedlist>
+<listitem>
+<simpara>Wire, to establish communication with depth sensor via I2C communication.</simpara>
+</listitem>
+<listitem>
+<simpara>Servo, to attach thrusters individually and write PWM signals into them.</simpara>
+</listitem>
+<listitem>
+<simpara>MS5837, depth sensor’s library.</simpara>
+</listitem>
+</itemizedlist>
+<section xml:id="_messages">
+<title>Messages</title>
+<itemizedlist>
+<listitem>
+<simpara>gallipoli_msgs/Motorpwm includes for integers in order m1,m2,m3,m4 which represents individual PWM signal for each thruster.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_topics_on_arduino">
+<title>Topics on Arduino</title>
+<section xml:id="_publishers">
+<title>Publishers</title>
+<itemizedlist>
+<listitem>
+<simpara>/depth , publishes the data recieved from depth sensor in meters.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_subscribers">
+<title>Subscribers</title>
+<itemizedlist>
+<listitem>
+<simpara>/vertical_pwm , writes the PWM signals into the thrusters which are responsible for movement in z axis.</simpara>
+</listitem>
+<listitem>
+<simpara>/direction_pwm , writes the PWM signals into the thrusters which are responsible for movement in x,y axis.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Start serial communication by following line:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">rosrun rosserial_arduino serial_node.py _port:=/dev/ttyACM0 _baud:=57600</programlisting>
+</section>
+</section>
+</section>
+</section>
+<section xml:id="_single_board_computer">
+<title>Single Board Computer</title>
+<section xml:id="_object_detection">
+<title>Object Detection</title>
+<simpara>YoloV3 Tiny from the <link xl:href="https://github.com/leggedrobotics/darknet_ros">YOLO ROS</link> package has been used with the data sets we have created. You only look once (YOLO) is a state-of-the-art, real-time object detection system. In the ROS package I mentioned above you are able to use YOLO (V3) on GPU and CPU.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata contentwidth="300px" fileref="img/img02.jpg"/>
+</imageobject>
+<textobject><phrase>img02</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata contentwidth="300px" fileref="img/img03.jpg"/>
+</imageobject>
+<textobject><phrase>img03</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Following lines added into YoloObjectDetector.cpp and BoundingBox.msg  to have center information of detected object:</simpara>
+<simpara>YoloObjectDetector.cpp, into the function void* YoloObjectDetector::publishInThread()</simpara>
+<programlisting language="cpp" linenumbering="unnumbered">int x_center= (xmin + xmax) / 2;
+int y_center= (ymin + ymax) / 2;
+
+boundingBox.xcenter = x_center;
+boundingBox.ycenter = y_center;</programlisting>
+<simpara>BoundingBox.msg:</simpara>
+<programlisting language="cpp" linenumbering="unnumbered">int64 xcenter
+int64 ycenter</programlisting>
+</section>
+<section xml:id="_teleoperation">
+<title>Teleoperation</title>
+<simpara>To run teleoperation type the following lines in different terminals:</simpara>
+<programlisting language="cpp" linenumbering="unnumbered">rosrun gallipoli_teleop teleop_key</programlisting>
+<simpara>teleop_key node takes inputs from terminal and publishes it in /direction topic.</simpara>
+<simpara>Control:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>W - Forward</simpara>
+</listitem>
+<listitem>
+<simpara>S - Backward</simpara>
+</listitem>
+<listitem>
+<simpara>A - Turn Left</simpara>
+</listitem>
+<listitem>
+<simpara>D - Turn Right</simpara>
+</listitem>
+<listitem>
+<simpara>Z - Go Left in Y Axis</simpara>
+</listitem>
+<listitem>
+<simpara>X - Go Right in Y Axis</simpara>
+</listitem>
+<listitem>
+<simpara>C - Go to Left Corner</simpara>
+</listitem>
+<listitem>
+<simpara>V - Go to Right Corner</simpara>
+</listitem>
+<listitem>
+<simpara>P - Stop</simpara>
+</listitem>
+</itemizedlist>
+<programlisting language="bash" linenumbering="unnumbered">rosrun gallipoli_teleop teleop_to_pwm</programlisting>
+<simpara>teleop_to_pwm node subcribes to /direction topic and sends PWM signals to thrusters based on the direction input it received.</simpara>
+</section>
+<section xml:id="_mission_software">
+<title>Mission Software</title>
+<simpara>Mission software merged under gate_mission.launch file and it starts the following nodes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Serial communication node</simpara>
+</listitem>
+<listitem>
+<simpara>Camera node</simpara>
+</listitem>
+<listitem>
+<simpara>Depth stabilizer node</simpara>
+</listitem>
+<listitem>
+<simpara>Object detection node</simpara>
+</listitem>
+<listitem>
+<simpara>go_to_gate node</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Mission designed based on the pool which has 1.60 meter depth so depth stabilizer node has a PID controller that fixes the robot at a depth of 1 meter.</simpara>
+<simpara>According to the results of our test drives in swimming pool, we have experienced that our camera can successfully detect objects between 15-20 meters so the idea behind the mission strategy is to start the mission by turning around itself and it starts moving towards the gate by using the PID loop which provides the robot to stay on the center of the gate when robot saw the gate.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="img/img05.gif"/>
+</imageobject>
+<textobject><phrase>img05</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+</section>
+<section xml:id="_capabilities">
+<title>Capabilities</title>
+<itemizedlist>
+<listitem>
+<simpara>Teleoperation provides 5DOF movement</simpara>
+</listitem>
+<listitem>
+<simpara>Depth stabilizer</simpara>
+</listitem>
+<listitem>
+<simpara>Real-Time object detection and movement controller</simpara>
+</listitem>
+</itemizedlist>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="img/img06.gif"/>
+</imageobject>
+<textobject><phrase>img06</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="img/img07.gif"/>
+</imageobject>
+<textobject><phrase>img07</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section xml:id="_bringup">
+<title>Bringup</title>
+<simpara>Install RealSense ROS Package</simpara>
+<simpara><link xl:href="https://github.com/IntelRealSense/realsense-ros">https://github.com/IntelRealSense/realsense-ros</link></simpara>
+<simpara>Install YOLO ROS Package</simpara>
+<simpara><link xl:href="https://github.com/leggedrobotics/darknet_ros">https://github.com/leggedrobotics/darknet_ros</link></simpara>
+<simpara>To start mission:</simpara>
+<programlisting language="cpp" linenumbering="unnumbered">roslaunch gallipoli_teleop gate_mission.launch</programlisting>
+<simpara>Teleoperation usage:</simpara>
+<programlisting language="cpp" linenumbering="unnumbered">roslaunch realsense2_camera rs_camera.launch
+
+rosrun rosserial_arduino serial_node.py _port:=/dev/ttyACM0 _baud:=57600
+
+rosrun gallipoli_teleop set_depth
+
+rosrun gallipoli_teleop teleop_key
+
+rosrun gallipoli_teleop teleop_to_pwm</programlisting>
+<simpara>For further information: <link xl:href="mailto:tayfun.kuscu.fl@gmail.com">tayfun.kuscu.fl@gmail.com</link></simpara>
+</section>
+</article>

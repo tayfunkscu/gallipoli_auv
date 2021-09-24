@@ -1,0 +1,7 @@
+<launch>
+	<node name="teleop_to_pwm" pkg="gallipoli_teleop" type="teleop_to_pwm">
+	</node>
+
+	<node name="teleop_key" pkg="gallipoli_teleop" type="teleop_key">
+	</node>
+</launch>

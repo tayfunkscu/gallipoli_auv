@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find gallipoli_auv_description)/urdf/sensors/magnetometer_snippets.xacro"/>
-  <xacro:include filename="$(find gallipoli_auv_description)/urdf/sensors/imu_snippets.xacro"/>
-  <xacro:include filename="$(find gallipoli_auv_description)/urdf/sensors/pressure_snippets.xacro"/>
-  <xacro:include filename="$(find gallipoli_auv_description)/urdf/sensors/sonar_snippets.xacro"/>
-</robot>
