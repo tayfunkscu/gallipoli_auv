@@ -1,6 +1,6 @@
 == Gallipoli AUV
 
-ROS based AUV developed for the competition "Teknofest 2021". All packages have been tested under ROS Melodic and Ubuntu 18.04.
+ROS-based AUV developed for the competition "Teknofest 2021". All packages tested under ROS Melodic and Ubuntu 18.04.
 
 image::img/img01.jpeg[width=300px]
 
@@ -36,7 +36,7 @@ image::img/img04.png[width=300px]
 == Software
 
 === Embedded
-Embedded software has been developed on Arduino
+Embedded software developed on Arduino
 
 ==== Used Libraries
 * Wire, to establish communication with depth sensor via I2C communication.
@@ -44,7 +44,7 @@ Embedded software has been developed on Arduino
 * MS5837, depth sensor's library.
 
 ===== Messages
-* gallipoli_msgs/Motorpwm includes for integers in order m1,m2,m3,m4 which represents individual PWM signal for each thruster.
+* gallipoli_msgs/Motorpwm includes integers in order m1,m2,m3,m4 representing individual PWM signal for each thruster.
 
 =====  Topics on Arduino
 
@@ -52,8 +52,8 @@ Embedded software has been developed on Arduino
 * /depth , publishes the data recieved from depth sensor in meters.
 
 ====== Subscribers
-* /vertical_pwm , writes the PWM signals into the thrusters which are responsible for movement in z axis.
-* /direction_pwm , writes the PWM signals into the thrusters which are responsible for movement in x,y axis.
+* /vertical_pwm , writes the PWM signals into the thrusters responsible for movement in z axis.
+* /direction_pwm , writes the PWM signals into the thrusters responsible for movement in x,y axis.
 
 
 Start serial communication by following line:
@@ -68,7 +68,7 @@ rosrun rosserial_arduino serial_node.py _port:=/dev/ttyACM0 _baud:=57600
 
 ==== Object Detection
 
-YoloV3 Tiny from the https://github.com/leggedrobotics/darknet_ros[YOLO ROS] package has been used with the data sets we have created. You only look once (YOLO) is a state-of-the-art, real-time object detection system. In the ROS package I mentioned above you are able to use YOLO (V3) on GPU and CPU.
+YoloV3 Tiny from the https://github.com/leggedrobotics/darknet_ros[YOLO ROS] package used with the data sets we have created. You only look once (YOLO) is a state-of-the-art, real-time object detection system. In the ROS package I mentioned above, you can use YOLO (V3) on GPU and CPU.
 
 image::img/img02.jpg[width=300px]
 image::img/img03.jpg[width=300px]
@@ -95,14 +95,14 @@ int64 ycenter
 
 ==== Teleoperation
 
-To run teleoperation type the following lines in different terminals:
+To run teleoperation, type the following lines in different terminals:
 
 [source, cpp]
 ----
 rosrun gallipoli_teleop teleop_key
 ----
 
-teleop_key node takes inputs from terminal and publishes it in /direction topic.
+teleop_key node takes inputs from the terminal and publishes it in /direction topic.
 
 Control:
 
@@ -122,7 +122,7 @@ Control:
 rosrun gallipoli_teleop teleop_to_pwm
 ----
 
-teleop_to_pwm node subcribes to /direction topic and sends PWM signals to thrusters based on the direction input it received.
+teleop_to_pwm node subscribes to /direction topic and sends PWM signals to thrusters based on the received direction input.
 
 
 ==== Mission Software
@@ -135,9 +135,9 @@ Mission software merged under gate_mission.launch file and it starts the followi
 * Object detection node
 * go_to_gate node
 
-Mission designed based on the pool which has 1.60 meter depth so depth stabilizer node has a PID controller that fixes the robot at a depth of 1 meter.
+Mission designed based on the pool with 1.60-meter depth so depth stabilizer node has a PID controller that fixes the robot at a depth of 1 meter.
 
-According to the results of our test drives in swimming pool, we have experienced that our camera can successfully detect objects between 15-20 meters so the idea behind the mission strategy is to start the mission by turning around itself and it starts moving towards the gate by using the PID loop which provides the robot to stay on the center of the gate when robot saw the gate.
+According to the results of our test drives in the swimming pool, we have experienced that our camera can successfully detect objects between 15-20 meters, so the idea behind the mission strategy is to start the mission by turning around itself. Then, it starts moving towards the gate using the PID loop, which allows the robot to stay at the center of the gate when it sees the gate.
 
 image::img/img05.gif[]
 
@@ -145,7 +145,7 @@ image::img/img05.gif[]
 
 * Teleoperation provides 5DOF movement
 * Depth stabilizer
-* Real-Time object detection and movement controller
+* Real-time object detection and movement controller
 
 image::img/img06.gif[]
 
