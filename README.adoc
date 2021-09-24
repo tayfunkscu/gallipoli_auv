@@ -147,9 +147,14 @@ image::img/img05.gif[]
 * Depth stabilizer
 * Real-time object detection and movement controller
 
-image::img/img06.gif[]
+[.clearfix]
+--
+[.left]
+image::img/img06.gif[width=360]
 
+[.left]
 image::img/img07.gif[]
+--
 
 == Bringup
 
